@@ -35,19 +35,40 @@ function generateStoryMarkup(story) {
     `);
 }
 
-async function submitStory(evt) {
+// async function submitStory(evt) {
+//   evt.preventDefault();
+//   const title = $("#story-title").val();
+//   const author = $("#story-author").val();
+//   const url = $("#story-url").val();
+//   const username = currentUser.username
+//   const storyData = { title, url, author, username };
+//   console.log(storyData)
+//   const story = await storyList.addStory(currentUser, { title , author, url, username });
+// }
+
+// $submitButton.on('click', submitStory);
+async function submitNewStory(evt) {
+  console.debug("submitNewStory");
   evt.preventDefault();
-  const title = $("#story-title").val();
-  const author = $("#story-author").val();
-  const url = $("#story-url").val();
-  console.log(title);
-  console.log(author);
-  console.log(url);
-  console.log(currentUser);
-  await storyList.addStory(currentUser, {title: title, author: author, url: url});
+
+  // grab all info from form
+  const title = $("#create-title").val();
+  const url = $("#create-url").val();
+  const author = $("#create-author").val();
+  const username = currentUser.username
+  const storyData = { title, url, author, username };
+
+  const story = await storyList.addStory(currentUser, storyData);
+
+  const $story = generateStoryMarkup(story);
+  $allStoriesList.prepend($story);
+
+  // hide the form and reset it
+  $submitForm.slideUp("slow");
+  $submitForm.trigger("reset");
 }
 
-$submitButton.on('click', submitStory);
+$submitForm.on("submit", submitNewStory);
 
 /** Gets list of stories from server, generates their HTML, and puts on page. */
 

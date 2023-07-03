@@ -20,7 +20,7 @@ function navSubmitStory(evt) {
   $submitForm.show();
 }
 
-$body.on("click", navSubmitStory);
+$body.on("click", "#submit-story-link", navSubmitStory);
 
 /** Show login/signup on click on "login" */
 

@@ -86,6 +86,8 @@ class StoryList {
     })
     const story = new Story(res.data.story);
     this.stories.unshift(story);
+
+    return story
     // UNIMPLEMENTED: complete this function!
   }
 }
