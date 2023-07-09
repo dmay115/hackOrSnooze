@@ -22,6 +22,27 @@ function navSubmitStory(evt) {
 
 $body.on("click", "#submit-story-link", navSubmitStory);
 
+function navFavoriteStories(evt) {
+  hidePageComponents();
+  putFavoritesOnPage()
+  $userFavorites.show();
+  if (currentUser.favorites.length == []){
+    $favoritesList.html("No Favorite Stories!")
+  }
+}
+
+$body.on("click", "#user-favorites-link", navFavoriteStories)
+
+function navUserStories(evt) {
+  hidePageComponents();
+  putUserStoriesOnPage();
+  $userStories.show();
+  if (currentUser.ownStories.length === 0){
+    $userStoriesList.html("No Stories Submitted!")
+  }
+}
+
+$body.on("click", "#user-stories-link", navUserStories)
 /** Show login/signup on click on "login" */
 
 function navLoginClick(evt) {

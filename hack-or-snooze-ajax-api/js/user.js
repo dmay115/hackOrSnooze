@@ -64,6 +64,100 @@ function logout(evt) {
 
 $navLogOut.on("click", logout);
 
+async function updateUserInfo(user) {
+  const token = user.loginToken
+  const res = await axios({
+    url: `${BASE_URL}/users/${user.username}`,
+    method: "GET",
+    params: { token },
+  });
+  user.ownStories = res.data.user.stories.map(s => new Story(s));
+}
+
+
+async function setFavorite(evt) {
+  evt.preventDefault();
+  const $clicked = $(evt.target);
+  const $story = $clicked.closest("li.in-main");
+  favoriteIconSwitch(evt.target.className, $clicked);
+  const $cloneStory = $story.clone();
+  const storyID = evt.target.id;
+  // $favoritesList.append($cloneStory);
+  // $cloneStory.removeClass("in-main").addClass("in-favorites");
+  await addFavorite(currentUser, storyID);
+}
+
+$(document).on("click", '.favorite-false', setFavorite);
+
+async function unsetFavorite(evt) {
+  evt.preventDefault();
+  const $clicked = $(evt.target);
+  const $story = $clicked.closest("li.in-favorites");
+  const storyID = evt.target.id;
+  favoriteIconSwitch(evt.target.className, $clicked);
+  // $story.remove();
+  await removeFavorite(currentUser, storyID);
+}
+
+$(document).on("click", '.favorite-true', unsetFavorite);
+
+function favoriteIconSwitch(className, target) {
+  if (className == "favorite-true") {
+    target.html("&#x2661;");
+    target.removeClass("favorite-true");
+    target.addClass("favorite-false");
+  } else {
+    target.html("&#x2665;");
+    target.removeClass("favorite-false");
+    target.addClass("favorite-true");
+  }
+}
+
+async function addFavorite(user, storyID) {
+  const token = user.loginToken;
+    const res = await axios.post(`${BASE_URL}/users/${user.username}/favorites/${storyID}`, 
+    {
+      "token": token,
+    })
+    user.favorites = res.data.user.favorites.map(s => new Story(s));
+    return res
+}
+
+async function removeFavorite(user, storyID) {
+  const token = user.loginToken;
+    const res = await axios.delete(`${BASE_URL}/users/${user.username}/favorites/${storyID}`, {
+    data: {
+      "token": token,
+    }
+  })
+    user.favorites = res.data.user.favorites.map(s => new Story(s));
+    return res
+}
+
+async function deleteClick(evt) {
+  evt.preventDefault();
+  const $clicked = $(evt.target);
+  const $story = $clicked.closest("li");
+  const storyID = evt.target.id;
+  const res = confirm("Delete Story?")
+  if (res) {
+    $story.remove();
+    await deleteStory(currentUser, storyID);
+  }
+}
+
+$(document).on("click", '.delete-story', deleteClick);
+
+async function deleteStory(user, storyID) {
+    const token = user.loginToken;
+      const res = await axios.delete(`${BASE_URL}/stories/${storyID}`, {
+      data: {
+        "token": token,
+      }
+    })
+    updateUserInfo(user)
+      return res
+}
 /******************************************************************************
  * Storing/recalling previously-logged-in-user with localStorage
  */

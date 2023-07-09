@@ -24,6 +24,7 @@
       href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
       integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
       crossorigin="anonymous">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="css/site.css">
   <link rel="stylesheet" href="css/user.css">
   <link rel="stylesheet" href="css/stories.css">
@@ -36,7 +37,12 @@
 <nav>
   <div class="navbar-brand">
     <a class="nav-link" href="#" id="nav-all">Hack or Snooze</a>
-    <a class="nav-link" href="#" id="submit-story-link">submit</a>
+    <text>|</text>
+    <a class="nav-link" href="#" id="submit-story-link">Submit</a>
+    <text>|</text>
+    <a class="nav-link" href="#" id="user-favorites-link">Favorites</a>
+    <text>|</text>
+    <a class="nav-link" href="#" id="user-stories-link">My Stories</a>
   </div>
   <div class="nav-right">
     <a class="nav-link" href="#" id="nav-login">login/signup</a>
@@ -67,10 +73,29 @@
       <input id="story-url">
     </div>
     <div>
-      <button type="submit" id="submit-button">submit story</button>
+      <button type="submit" id="submit-button" class="submit">submit story</button>
     </div>
   </form>
 
+  <form
+    action="#"
+    id="user-favorites"
+    class="hidden">
+  <h4>Your Favorite Stories</h4>
+    <div>
+      <ol id="favorite-stories-list" class="favorites-list"></ol>
+    </div>
+  </form>
+
+  <form
+    action="#"
+    id="user-stories"
+    class="hidden">
+  <h4>Your Submitted Stories</h4>
+    <div>
+      <ol id="submitted-stories-list" class="user-stories-list">test</ol>
+    </div>
+  </form>
   <!-- loading message (removed by JS after stories loaded) -->
   <div id="stories-loading-msg">Loading&hellip;</div>
 
@@ -93,7 +118,7 @@
       <label for="login-password">password</label>
       <input id="login-password" type="password" autocomplete="current-password">
     </div>
-    <button type="submit">login</button>
+    <button type="submit" class="submit">login</button>
     <hr>
   </form>
 
@@ -116,7 +141,7 @@
       <label for="signup-password">password</label>
       <input id="signup-password" autocomplete="new-password" type="password">
     </div>
-    <button type="submit">create account</button>
+    <button type="submit" class="submit">create account</button>
   </form>
 </section>
 

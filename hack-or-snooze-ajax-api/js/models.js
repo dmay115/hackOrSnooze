@@ -23,9 +23,11 @@ class Story {
 
   /** Parses hostname out of URL and returns it. */
 
-  getHostName() {
-    // UNIMPLEMENTED: complete this function!
-    return "hostname.com";
+  getHostName(story) {
+    const url = new URL(story.url)
+  console.log(url.hostname)
+  const hostName = url.hostname
+  return hostName
   }
 }
 
@@ -64,8 +66,8 @@ class StoryList {
 
     // build an instance of our own class using the new array of stories
     return new StoryList(stories);
-  }
-
+  };
+  // }
   /** Adds story data to API, makes a Story instance, adds it to story list.
    * - user - the current instance of User who will post the story
    * - obj of {title, author, url}
@@ -86,7 +88,7 @@ class StoryList {
     })
     const story = new Story(res.data.story);
     this.stories.unshift(story);
-
+    user.ownStories.unshift(story);
     return story
     // UNIMPLEMENTED: complete this function!
   }

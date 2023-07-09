@@ -32,6 +32,10 @@ a:hover {
 
 /* Site layout */
 
+body{
+  background-image: radial-gradient(circle at center, #ba79d4, #c3e2ff);
+}
+
 /* This is the basic box that the main part of the page goes into */
 .container {
   display: flex;
@@ -100,6 +104,18 @@ form > button:hover {
 form > hr {
   margin: 0;
   border: 1px solid lightgray;
+}
+
+button.submit {
+  padding: 10px 20px;
+  border-radius: 5px;
+  background-color: rgb(165, 165, 233);
+  color: white;
+  outline: none;
+  font-weight: bold;
+  font-size: 1rem;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .login-input label {
